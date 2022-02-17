@@ -9,6 +9,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Header></Header>
+      <Gameboard></Gameboard>
       <Footer></Footer>
     </View>
   );

@@ -62,5 +62,11 @@ export default StyleSheet.create({
   buttonText: {
     color:"#2B2B52",
     fontSize: 20
+  }, 
+  pointsForEachNumber: {
+      flexDirection: 'row',
+      justifyContent:'space-between',
+      padding: 100,
+      
   }
 });
