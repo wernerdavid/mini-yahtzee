@@ -64,9 +64,12 @@ export default StyleSheet.create({
     fontSize: 20
   }, 
   pointsForEachNumber: {
-      flexDirection: 'row',
-      justifyContent:'space-between',
-      padding: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
       
+  }, 
+  total: {
+    fontSize: 25,
+    marginBottom: 20,
   }
 });

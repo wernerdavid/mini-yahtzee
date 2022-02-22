@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, Pressable } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { Col, Row, Grid } from "react-native-easy-grid";
 import styles from '../style/style';
 
 let dicesBoard = [];
@@ -109,7 +110,17 @@ export default function Gameboard() {
                 onPress={() => throwDices()}>
                 <Text style={styles.buttonText}>Throw dices</Text>
             </Pressable>
-            <View style={styles.flex}>{rowNumbers}</View>
+            <Text style={styles.total}>Total: {totalPoints}</Text>
+            <Grid>
+                <Row>
+                    <Col style={styles.pointsForEachNumber}>{pointsNumber1}{rowNumbers[0]}</Col>
+                    <Col style={styles.pointsForEachNumber}>{pointsNumber2}{rowNumbers[1]}</Col>
+                    <Col style={styles.pointsForEachNumber}>{pointsNumber3}{rowNumbers[2]}</Col>
+                    <Col style={styles.pointsForEachNumber}>{pointsNumber4}{rowNumbers[3]}</Col>
+                    <Col style={styles.pointsForEachNumber}>{pointsNumber5}{rowNumbers[4]}</Col>
+                    <Col style={styles.pointsForEachNumber}>{pointsNumber6}{rowNumbers[5]}</Col>
+                </Row>                
+            </Grid>
         </View>
     )
 }
