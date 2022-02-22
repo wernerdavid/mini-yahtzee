@@ -93,8 +93,7 @@ export default function Gameboard() {
         }else {
             let dices = [...selectedDices];
             dices[i] = selectedDices[i] ? false : true;
-            setSelectedDices(dices);
-            console.log(nbrOfThrowsLeft);   
+            setSelectedDices(dices);  
         } 
     }
 
@@ -124,8 +123,7 @@ export default function Gameboard() {
         if (turns < 5) {
             setNbrOfThrowsLeft(NBR_OF_THROWS);  
         } 
-        setTurns(turns + 1);
-        console.log(turns); 
+        setTurns(turns + 1); 
         }
         } 
 }
@@ -184,20 +182,21 @@ export default function Gameboard() {
             <Text style={styles.gameinfo}>{status}</Text>
             <View>{renderButton()}</View>
             <Text style={styles.total}>Total: {totalPoints}</Text>
-            {(BONUS_POINTS - totalPoints) <= 0}
             <Text style={styles.gameinfo}>
                 {(BONUS_POINTS-totalPoints) <= 0 ? "You got the bonus!" : `You are ${BONUS_POINTS -totalPoints} points away from bonus`}
             </Text>
-            <Grid>
+            <View style={styles.flex}>
+            <Grid style={styles.grid}>
                 <Row>
-                    <Col style={styles.pointsForEachNumber}>{pointsNumber[0]}{rowNumbers[0]}</Col>
-                    <Col style={styles.pointsForEachNumber}>{pointsNumber[1]}{rowNumbers[1]}</Col>
-                    <Col style={styles.pointsForEachNumber}>{pointsNumber[2]}{rowNumbers[2]}</Col>
-                    <Col style={styles.pointsForEachNumber}>{pointsNumber[3]}{rowNumbers[3]}</Col>
-                    <Col style={styles.pointsForEachNumber}>{pointsNumber[4]}{rowNumbers[4]}</Col>
-                    <Col style={styles.pointsForEachNumber}>{pointsNumber[5]}{rowNumbers[5]}</Col>
+                    <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[0]}</Text>{rowNumbers[0]}</Col>
+                    <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[1]}</Text>{rowNumbers[1]}</Col>
+                    <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[2]}</Text>{rowNumbers[2]}</Col>
+                    <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[3]}</Text>{rowNumbers[3]}</Col>
+                    <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[4]}</Text>{rowNumbers[4]}</Col>
+                    <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[5]}</Text>{rowNumbers[5]}</Col>
                 </Row>                
             </Grid>
+            </View>
             
         </View>
     )

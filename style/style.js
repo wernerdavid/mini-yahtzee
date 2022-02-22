@@ -37,9 +37,6 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   gameinfo: {
-    backgroundColor: '#fff',
-    textAlign: 'center',
-    justifyContent: 'center',
     fontSize: 18,
   },
   item: {
@@ -66,13 +63,16 @@ export default StyleSheet.create({
     fontSize: 20
   }, 
   pointsForEachNumber: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
+    textAlign: 'center',
       
   }, 
   total: {
     fontSize: 25,
     marginBottom: 20,
-  }
+  }, 
+  grid: {
+    marginLeft: 30,
+    marginRight: 30,
+    alignItems: 'center',
+  },
 });
