@@ -47,7 +47,8 @@ export default StyleSheet.create({
     padding: 5
   },
   flex: {
-    flexDirection: "row"
+    flexDirection: "row", 
+    marginTop: 10,
   },
   button: {
     margin: 30,
@@ -66,6 +67,7 @@ export default StyleSheet.create({
   pointsForEachNumber: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 20,
       
   }, 
   total: {
