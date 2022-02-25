@@ -39,10 +39,6 @@ export default StyleSheet.create({
   gameinfo: {
     fontSize: 18,
   },
-  item: {
-    margin: 15,
-    padding: 5
-  },
   flex: {
     flexDirection: "row", 
     marginTop: 20,
@@ -64,7 +60,6 @@ export default StyleSheet.create({
   }, 
   pointsForEachNumber: {
     textAlign: 'center',
-      
   }, 
   total: {
     fontSize: 25,

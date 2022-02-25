@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, Pressable } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import styles from '../style/style';
 
 let dicesBoard = [];
-
 let numberBoard = [];
 const NBR_OF_DICES = 5;
 const NBR_OF_THROWS = 3;
@@ -60,27 +59,27 @@ export default function Gameboard() {
     }
 
     useEffect(() => {
-        //checkWinner();
         if (turns < 6) {
-        if (nbrOfThrowsLeft === NBR_OF_THROWS) {
-            setStatus('Throw dices.');
-            setSelectedDices([]);
-        } else if (nbrOfThrowsLeft < NBR_OF_THROWS && nbrOfThrowsLeft > 0) {
-            setStatus("Select and throw dices again.")
-        } else if (nbrOfThrowsLeft < 0) {
-            setNbrOfThrowsLeft(NBR_OF_THROWS);
+            if (nbrOfThrowsLeft === NBR_OF_THROWS) {
+                setStatus('Throw dices.');
+                setSelectedDices([]);
+            } else if (nbrOfThrowsLeft < NBR_OF_THROWS && nbrOfThrowsLeft > 0) {
+                setStatus("Select and throw dices again.")
+            } else if (nbrOfThrowsLeft < 0) {
+                setNbrOfThrowsLeft(NBR_OF_THROWS);
+            } else {
+                setStatus("Select your points.")
+            }
         } else {
-            setStatus("Select your points.")
+            setStatus("Game over. All points selected.");
+            setSelectedDices([]);
         }
-    } else {
-        setStatus("Game over. All points selected.");
-        setSelectedDices([]);
-    }
     }, [nbrOfThrowsLeft, turns]);
 
     function getDiceColor(i) {
         return selectedDices[i] ? "black" : "steelblue";
     }
+
     function getNumberColor(i) {
         return selectedNumbers[i] ? "black" : "steelblue";
     }
@@ -88,61 +87,64 @@ export default function Gameboard() {
     function selectDice(i) {
         if (nbrOfThrowsLeft === NBR_OF_THROWS) {
             setStatus("You have to throw the dices first.");
-        } else if (nbrOfThrowsLeft === 0 && turns === 6) {
+        } 
+        else if (nbrOfThrowsLeft === 0 && turns === 6) {
             setStatus("Please restart the game first.");
-        }else {
+        } 
+        else {
             let dices = [...selectedDices];
             dices[i] = selectedDices[i] ? false : true;
-            setSelectedDices(dices);  
-        } 
+            setSelectedDices(dices);
+        }
     }
 
     function selectNumber(i) {
         let number = [...selectedNumbers];
         number[i] = selectedNumbers[i] ? false : true;
-        
-        if (number[i] === false) {
-            setStatus("You already selected points for " + `${i}`);
-        }
-        else if (nbrOfThrowsLeft > 0) {
+
+         if (nbrOfThrowsLeft > 0) {
             setStatus("Throw 3 times before setting points");
         } 
+        else if (nbrOfThrowsLeft === 0 && turns === 6) {
+            setStatus("Please restart the game first.");
+        }
+        else if (number[i] === false) {
+            setStatus("You already selected points for " + `${i}`);
+        }
         else {
-            
             setSelectedNumbers(number);
             let currentSelection = 'dice-' + i;
-        
+
             let numberOfPoints = 0;
             for (let x = 0; x < NBR_OF_DICES; x++) {
-                if (currentSelection === dicesBoard[x]){
-                 numberOfPoints = numberOfPoints + i;
-            
-        }           
-        pointsNumber[i-1] = numberOfPoints;
-        setTotalPoints(totalPoints + numberOfPoints);
-        if (turns < 5) {
-            setNbrOfThrowsLeft(NBR_OF_THROWS);  
-        } 
-        setTurns(turns + 1); 
+                if (currentSelection === dicesBoard[x]) {
+                    numberOfPoints = numberOfPoints + i;
+                }
+                pointsNumber[i - 1] = numberOfPoints;
+                setTotalPoints(totalPoints + numberOfPoints);
+                if (turns < 5) {
+                    setNbrOfThrowsLeft(NBR_OF_THROWS);
+                }
+                setTurns(turns + 1);
+            }
         }
-        } 
-}
+    }
 
     function throwDices() {
-        if(nbrOfThrowsLeft === 0 && turns < 6){
+        if (nbrOfThrowsLeft === 0 && turns < 6) {
             setStatus("Select your points before next throw");
         } else {
-        for (let i = 0; i < NBR_OF_DICES; i++) {
-            if (!selectedDices[i]) {
-                let randomNumber = Math.floor(Math.random() * 6 + 1);
-                dicesBoard[i] = 'dice-' + randomNumber;
+            for (let i = 0; i < NBR_OF_DICES; i++) {
+                if (!selectedDices[i]) {
+                    let randomNumber = Math.floor(Math.random() * 6 + 1);
+                    dicesBoard[i] = 'dice-' + randomNumber;
+                }
             }
-        }    
-        setNbrOfThrowsLeft(nbrOfThrowsLeft - 1);    
+            setNbrOfThrowsLeft(nbrOfThrowsLeft - 1);
+        }
     }
-}
 
-    function startNewGame () {
+    function startNewGame() {
         setTurns(0);
         setNbrOfThrowsLeft(3);
         setSelectedNumbers(new Array(6).fill(false));
@@ -153,28 +155,25 @@ export default function Gameboard() {
     }
 
     function renderButton() {
-        if(turns != 6) {
+        if (turns != 6) {
             return (
                 <Pressable
-                style={styles.button}
-                onPress={() => throwDices()}>
-                <Text style={styles.buttonText}>Throw dices</Text>
-            </Pressable>
+                    style={styles.button}
+                    onPress={() => throwDices()}>
+                    <Text style={styles.buttonText}>Throw dices</Text>
+                </Pressable>
             )
         } else {
             return (
-            <Pressable
-                style={styles.button}
-                onPress={() => startNewGame()}>
-                <Text style={styles.buttonText}>Restart game</Text>
-            </Pressable>
+                <Pressable
+                    style={styles.button}
+                    onPress={() => startNewGame()}>
+                    <Text style={styles.buttonText}>Restart game</Text>
+                </Pressable>
             )
         }
     }
 
-    
-
-   
     return (
         <View style={styles.gameboard}>
             <View style={styles.flex}>{rowDices}</View>
@@ -183,21 +182,20 @@ export default function Gameboard() {
             <View>{renderButton()}</View>
             <Text style={styles.total}>Total: {totalPoints}</Text>
             <Text style={styles.gameinfo}>
-                {(BONUS_POINTS-totalPoints) <= 0 ? "You got the bonus!" : `You are ${BONUS_POINTS -totalPoints} points away from bonus`}
+                {(BONUS_POINTS - totalPoints) <= 0 ? "You got the bonus!" : `You are ${BONUS_POINTS - totalPoints} points away from bonus`}
             </Text>
             <View style={styles.flex}>
-            <Grid style={styles.grid}>
-                <Row>
-                    <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[0]}</Text>{rowNumbers[0]}</Col>
-                    <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[1]}</Text>{rowNumbers[1]}</Col>
-                    <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[2]}</Text>{rowNumbers[2]}</Col>
-                    <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[3]}</Text>{rowNumbers[3]}</Col>
-                    <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[4]}</Text>{rowNumbers[4]}</Col>
-                    <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[5]}</Text>{rowNumbers[5]}</Col>
-                </Row>                
-            </Grid>
+                <Grid style={styles.grid}>
+                    <Row>
+                        <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[0]}</Text>{rowNumbers[0]}</Col>
+                        <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[1]}</Text>{rowNumbers[1]}</Col>
+                        <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[2]}</Text>{rowNumbers[2]}</Col>
+                        <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[3]}</Text>{rowNumbers[3]}</Col>
+                        <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[4]}</Text>{rowNumbers[4]}</Col>
+                        <Col><Text style={styles.pointsForEachNumber}>{pointsNumber[5]}</Text>{rowNumbers[5]}</Col>
+                    </Row>
+                </Grid>
             </View>
-            
         </View>
     )
 }
